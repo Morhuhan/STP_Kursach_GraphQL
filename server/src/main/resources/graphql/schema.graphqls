@@ -1,0 +1,55 @@
+type User {
+    id: ID!
+    username: String!
+    cart: Cart
+    reviews: [Review]
+}
+
+type Category {
+    id: ID!
+    name: String!
+    products: [Product]
+}
+
+type Product {
+    id: ID!
+    name: String!
+    price: Float!
+    imageUrl: String
+    description: String
+    rating: Float
+    reviews: [Review]
+    category: Category
+}
+
+type Review {
+    id: ID!
+    content: String
+    rating: Float
+    author: User
+    product: Product
+}
+
+type CartItem {
+    id: ID!
+    productId: ID
+    quantity: Int
+    product: Product
+}
+
+
+type Cart {
+    id: ID!
+    items: [CartItem]
+}
+
+type Query {
+    products: [Product]
+    product(id: ID!): Product
+    cart: Cart
+}
+
+type Mutation {
+    addToCart(productId: ID!, quantity: Int!): Cart
+    addReview(productId: ID!, authorId: ID!, content: String!, rating: Float!): Review
+}
