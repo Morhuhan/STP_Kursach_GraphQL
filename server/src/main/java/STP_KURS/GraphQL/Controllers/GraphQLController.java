@@ -1,9 +1,11 @@
 package STP_KURS.GraphQL.Controllers;
 
 import STP_KURS.GraphQL.Entities.Cart;
+import STP_KURS.GraphQL.Entities.Category;
 import STP_KURS.GraphQL.Entities.Product;
 import STP_KURS.GraphQL.Entities.Review;
 import STP_KURS.GraphQL.Servecies.CartService;
+import STP_KURS.GraphQL.Servecies.CategoryService;
 import STP_KURS.GraphQL.Servecies.ProductService;
 import STP_KURS.GraphQL.Servecies.ReviewService;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -21,16 +23,28 @@ public class GraphQLController {
     private final ProductService productService;
     private final CartService cartService;
     private final ReviewService reviewService;
+    private final CategoryService categoryService;
 
-    public GraphQLController(ProductService productService, CartService cartService, ReviewService reviewService) {
+    public GraphQLController(ProductService productService, CartService cartService, ReviewService reviewService, CategoryService categoryService) {
         this.productService = productService;
         this.cartService = cartService;
         this.reviewService = reviewService;
+        this.categoryService = categoryService;
     }
 
     @QueryMapping
-    public List<Product> products() {
-        return productService.getProducts();
+    public List<Product> products(
+            @Argument String searchTerm,
+            @Argument Double minPrice,
+            @Argument Double maxPrice,
+            @Argument Long categoryId
+    ) {
+        return productService.getFilteredProducts(searchTerm, minPrice, maxPrice, categoryId);
+    }
+
+    @QueryMapping
+    public List<Category> categories() {
+        return categoryService.getAllCategories();
     }
 
     @QueryMapping

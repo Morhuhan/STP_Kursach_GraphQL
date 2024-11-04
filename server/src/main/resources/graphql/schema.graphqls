@@ -44,9 +44,19 @@ type Cart {
 }
 
 type Query {
-    products: [Product]
+
+    products(
+        searchTerm: String,
+        minPrice: Float,
+        maxPrice: Float,
+        categoryId: ID
+    ): [Product]
+
     product(id: ID!): Product
+
     cart: Cart
+
+    categories: [Category]
 }
 
 type Mutation {
