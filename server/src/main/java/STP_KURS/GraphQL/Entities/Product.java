@@ -1,5 +1,6 @@
 package STP_KURS.GraphQL.Entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,10 +20,14 @@ public class Product {
     private String description;
     private Double rating;
 
+    @Column(name = "in_stock")
+    private Boolean inStock;
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Review> reviews;
 
     @ManyToOne
+    @ToString.Exclude
     @JoinColumn(name = "category_id")
     private Category category;
 }

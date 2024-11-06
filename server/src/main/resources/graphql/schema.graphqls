@@ -18,6 +18,7 @@ type Product {
     imageUrl: String
     description: String
     rating: Float
+    inStock: Boolean
     reviews: [Review]
     category: Category
 }
@@ -32,25 +33,30 @@ type Review {
 
 type CartItem {
     id: ID!
-    productId: ID
     quantity: Int
     product: Product
 }
-
 
 type Cart {
     id: ID!
     items: [CartItem]
 }
 
-type Query {
+type ProductPage {
+    products: [Product]
+    totalPages: Int
+    currentPage: Int
+}
 
+type Query {
     products(
         searchTerm: String,
         minPrice: Float,
         maxPrice: Float,
-        categoryId: ID
-    ): [Product]
+        categoryId: ID,
+        page: Int,
+        pageSize: Int
+    ): ProductPage
 
     product(id: ID!): Product
 
@@ -61,5 +67,10 @@ type Query {
 
 type Mutation {
     addToCart(productId: ID!, quantity: Int!): Cart
-    addReview(productId: ID!, authorId: ID!, content: String!, rating: Float!): Review
+    addReview(productId: ID!, content: String!, rating: Float!): Review
+    updateProductStock(productId: ID!, inStock: Boolean!): Product
+}
+
+type Subscription {
+    productUpdated(id: ID): Product
 }

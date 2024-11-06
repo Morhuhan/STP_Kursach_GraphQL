@@ -2,6 +2,8 @@ package STP_KURS.GraphQL.Entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
+
 import java.util.List;
 
 @Entity
@@ -15,5 +17,6 @@ public class Category {
     private String name;
 
     @OneToMany(mappedBy = "category")
+    @ToString.Exclude
     private List<Product> products;
 }

@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LoginForm from './access/LoginForm';
 import HomePage from './pages/HomePage';
 import ProductDetail from './pages/ProductDetail';
-import CartPage from './pages/CartPage';
+import Cart from './components/Cart';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -57,7 +57,7 @@ function App() {
           ) : (
             <>
               <Route path="/product/:id" element={<ProductDetail />} />
-              <Route path="/cart" element={<CartPage />} />
+              <Route path="/cart" element={<Cart />} /> 
               <Route path="/" element={<HomePage />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </>

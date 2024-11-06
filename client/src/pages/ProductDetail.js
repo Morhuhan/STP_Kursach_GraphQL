@@ -1,5 +1,6 @@
+
 import React, { useState } from 'react';
-import { useQuery, gql, useMutation } from '@apollo/client';
+import { useQuery, gql, useMutation, useSubscription } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import noImage from '../noimage.png';
 
@@ -12,6 +13,7 @@ const GET_PRODUCT_DETAILS = gql`
       description
       imageUrl
       rating
+      inStock
       reviews {
         id
         author {
@@ -25,14 +27,25 @@ const GET_PRODUCT_DETAILS = gql`
 `;
 
 const ADD_REVIEW = gql`
-  mutation AddReview($productId: ID!, $authorId: ID!, $content: String!, $rating: Float!) {
-  addReview(productId: $productId, authorId: $authorId, content: $content, rating: $rating) {
-    id
-    author {
-      username
+  mutation AddReview($productId: ID!, $content: String!, $rating: Float!) {
+    addReview(productId: $productId, content: $content, rating: $rating) {
+      id
+      author {
+        username
+      }
+      content
+      rating
     }
-    content
-    rating
+  }
+`;
+
+const PRODUCT_UPDATED = gql`
+  subscription OnProductUpdated($id: ID!) {
+    productUpdated(id: $id) {
+      id
+      name
+      price
+      inStock
     }
   }
 `;
@@ -43,7 +56,21 @@ function ProductDetail() {
     variables: { id },
   });
 
-  const [author, setAuthor] = useState('');
+  useSubscription(PRODUCT_UPDATED, {
+    variables: { id },
+    onSubscriptionData: ({ client, subscriptionData }) => {
+      if (subscriptionData.data) {
+        client.writeQuery({
+          query: GET_PRODUCT_DETAILS,
+          variables: { id },
+          data: {
+            product: subscriptionData.data.productUpdated,
+          },
+        });
+      }
+    },
+  });
+
   const [content, setContent] = useState('');
   const [ratingInput, setRatingInput] = useState(0);
 
@@ -56,12 +83,10 @@ function ProductDetail() {
     addReview({
       variables: {
         productId: id,
-        author,
         content,
         rating: parseFloat(ratingInput),
       },
     });
-    setAuthor('');
     setContent('');
     setRatingInput(0);
   };
@@ -69,7 +94,7 @@ function ProductDetail() {
   if (loading) return <p>Загрузка товара...</p>;
   if (error) return <p>Ошибка при загрузке товара.</p>;
 
-  const { product } = data;
+  const product = data.product;
 
   return (
     <div className="ProductDetail">
@@ -79,6 +104,7 @@ function ProductDetail() {
         <p>Цена: ${product.price.toFixed(2)}</p>
         <p>Рейтинг: {product.rating}</p>
         <p>Описание: {product.description}</p>
+        <p>{product.inStock ? 'В наличии' : 'Нет в наличии'}</p>
       </div>
 
       <div className="ProductReviews">
@@ -87,7 +113,8 @@ function ProductDetail() {
           <ul>
             {product.reviews.map((review) => (
               <li key={review.id}>
-                <strong>{review.author.username}</strong> (Рейтинг: {review.rating}): {review.content}
+                <strong>{review.author.username}</strong> (Рейтинг: {review.rating}):{' '}
+                {review.content}
               </li>
             ))}
           </ul>
@@ -99,13 +126,6 @@ function ProductDetail() {
       <div className="AddReview">
         <h3>Добавить отзыв:</h3>
         <form onSubmit={handleAddReview}>
-          <input
-            type="text"
-            placeholder="Ваше имя"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-            required
-          />
           <textarea
             placeholder="Ваш отзыв"
             value={content}

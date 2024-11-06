@@ -16,6 +16,9 @@ public class CartItem {
     @JoinColumn(name = "cart_id", nullable = false)
     private Cart cart;
 
+    @Column(name = "product_id", insertable = false, updatable = false)
+    private Long productId;
+
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;

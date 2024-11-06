@@ -1,9 +1,6 @@
 package STP_KURS.GraphQL.Controllers;
 
-import STP_KURS.GraphQL.Entities.Cart;
-import STP_KURS.GraphQL.Entities.Category;
-import STP_KURS.GraphQL.Entities.Product;
-import STP_KURS.GraphQL.Entities.Review;
+import STP_KURS.GraphQL.Entities.*;
 import STP_KURS.GraphQL.Servecies.CartService;
 import STP_KURS.GraphQL.Servecies.CategoryService;
 import STP_KURS.GraphQL.Servecies.ProductService;
@@ -33,13 +30,15 @@ public class GraphQLController {
     }
 
     @QueryMapping
-    public List<Product> products(
+    public ProductPage products(
             @Argument String searchTerm,
             @Argument Double minPrice,
             @Argument Double maxPrice,
-            @Argument Long categoryId
+            @Argument Long categoryId,
+            @Argument Integer page,
+            @Argument Integer pageSize
     ) {
-        return productService.getFilteredProducts(searchTerm, minPrice, maxPrice, categoryId);
+        return productService.getProductsByPage(searchTerm, minPrice, maxPrice, categoryId, page, pageSize);
     }
 
     @QueryMapping
@@ -59,11 +58,20 @@ public class GraphQLController {
 
     @MutationMapping
     public Cart addToCart(@Argument("productId") Long productId, @Argument Integer quantity) {
-        return cartService.addToCart(productId, quantity);
+        Cart cart = cartService.addToCart(productId, quantity);
+
+        Product updatedProduct = productService.updateProductStock(productId, false);
+
+        return cart;
     }
 
     @MutationMapping
     public Review addReview(@Argument Long productId, @Argument Long authorId, @Argument String content, @Argument Double rating) {
         return reviewService.addReview(productId, authorId, content, rating);
+    }
+
+    @MutationMapping
+    public Product updateProductStock(@Argument Long productId, @Argument Boolean inStock) {
+        return productService.updateProductStock(productId, inStock);
     }
 }

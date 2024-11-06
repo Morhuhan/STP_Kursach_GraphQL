@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery, gql } from '@apollo/client';
 
-const GET_CART = gql`
+export const GET_CART = gql`
   query GetCart {
     cart {
       id
@@ -30,7 +30,10 @@ function Cart() {
     return <p>Ваша корзина пуста.</p>;
   }
 
-  const total = cart.items.reduce((sum, item) => sum + item.quantity * item.product.price, 0);
+  const total = cart.items.reduce(
+    (sum, item) => sum + item.quantity * item.product.price,
+    0
+  );
 
   return (
     <div className="Cart">
@@ -38,7 +41,8 @@ function Cart() {
       <ul>
         {cart.items.map((item) => (
           <li key={item.id}>
-            {item.product.name} x {item.quantity} - ${(item.product.price * item.quantity).toFixed(2)}
+            {item.product.name} x {item.quantity} - $
+            {(item.product.price * item.quantity).toFixed(2)}
           </li>
         ))}
       </ul>
