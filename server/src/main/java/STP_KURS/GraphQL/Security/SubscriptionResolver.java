@@ -31,10 +31,7 @@ public class SubscriptionResolver {
     public void publishProductUpdate(Long productId) {
         Product updatedProduct = productRepository.findByIdWithReviewsAndAuthor(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
-
-        // Логируем данные
         System.out.println("Publishing product update: " + updatedProduct);
-
         productSink.tryEmitNext(updatedProduct);
     }
 }

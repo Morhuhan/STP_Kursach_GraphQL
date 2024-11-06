@@ -1,6 +1,7 @@
 package STP_KURS.GraphQL.Controllers;
 
 import STP_KURS.GraphQL.Entities.*;
+import STP_KURS.GraphQL.Repos.UserRepository;
 import STP_KURS.GraphQL.Servecies.CartService;
 import STP_KURS.GraphQL.Servecies.CategoryService;
 import STP_KURS.GraphQL.Servecies.ProductService;
@@ -8,6 +9,8 @@ import STP_KURS.GraphQL.Servecies.ReviewService;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -21,12 +24,14 @@ public class GraphQLController {
     private final CartService cartService;
     private final ReviewService reviewService;
     private final CategoryService categoryService;
+    private final UserRepository userRepository;
 
-    public GraphQLController(ProductService productService, CartService cartService, ReviewService reviewService, CategoryService categoryService) {
+    public GraphQLController(ProductService productService, CartService cartService, ReviewService reviewService, CategoryService categoryService, UserRepository userRepository) {
         this.productService = productService;
         this.cartService = cartService;
         this.reviewService = reviewService;
         this.categoryService = categoryService;
+        this.userRepository = userRepository;
     }
 
     @QueryMapping
@@ -66,8 +71,16 @@ public class GraphQLController {
     }
 
     @MutationMapping
-    public Review addReview(@Argument Long productId, @Argument Long authorId, @Argument String content, @Argument Double rating) {
-        return reviewService.addReview(productId, authorId, content, rating);
+    public Review addReview(
+            @Argument Long productId,
+            @Argument String content,
+            @Argument Double rating,
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
+        User author = userRepository.findByUsername(userDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return reviewService.addReview(productId, author, content, rating);
     }
 
     @MutationMapping

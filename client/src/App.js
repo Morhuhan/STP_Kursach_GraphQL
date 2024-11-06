@@ -3,7 +3,6 @@ import { ApolloProvider } from '@apollo/client';
 import { createApolloClient } from './access/apolloClient';
 import axios from 'axios';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-
 import LoginForm from './access/LoginForm';
 import HomePage from './pages/HomePage';
 import ProductDetail from './pages/ProductDetail';
