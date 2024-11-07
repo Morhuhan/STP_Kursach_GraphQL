@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { ApolloProvider } from '@apollo/client';
 import { createApolloClient } from './access/apolloClient';
 import axios from 'axios';
@@ -12,12 +12,12 @@ import Footer from './components/Footer';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
-  const client = createApolloClient();
+  const client = useMemo(() => createApolloClient(), []);
 
+  axios.defaults.withCredentials = true;
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        axios.defaults.withCredentials = true;
         const response = await axios.get('http://localhost:8080/auth/status');
         if (response.status === 200) {
           setAuthenticated(true);
@@ -56,7 +56,7 @@ function App() {
           ) : (
             <>
               <Route path="/product/:id" element={<ProductDetail />} />
-              <Route path="/cart" element={<Cart />} /> 
+              <Route path="/cart" element={<Cart />} />
               <Route path="/" element={<HomePage />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </>
