@@ -17,9 +17,6 @@ export const createApolloClient = () => {
       connectionParams: {
         authToken: localStorage.getItem('authToken'),
       },
-      options: {
-        reconnect: true,
-      },
     })
   );
 

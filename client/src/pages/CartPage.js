@@ -1,4 +1,3 @@
-// CartPage.js
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_CART } from '../queries/cartQueries'; 
