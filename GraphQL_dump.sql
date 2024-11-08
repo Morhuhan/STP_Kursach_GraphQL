@@ -330,38 +330,38 @@ COPY public.category (id, name) FROM stdin;
 --
 
 COPY public.product (id, name, price, image_url, description, rating, category_id, in_stock) FROM stdin;
+1	Smartphone	699.99		Latest model smartphone with advanced features.	4.50	1	t
+2	Laptop	1299.99		High-performance laptop suitable for gaming and work.	4.70	1	t
+3	Novel Book	19.99		An intriguing novel by a famous author.	4.20	2	t
+4	T-Shirt	9.99		Comfortable cotton t-shirt in various sizes.	4.00	3	t
+5	Blender	49.99		Powerful blender perfect for smoothies.	4.30	4	t
+6	Headphones	199.99	\N	Noise-cancelling over-ear headphones.	4.60	1	t
+7	E-reader	129.99	\N	Lightweight e-reader with adjustable backlight.	4.50	1	t
+8	Wireless Mouse	29.99	\N	Ergonomic wireless mouse with USB receiver.	4.30	1	t
+9	Science Fiction Book	15.99	\N	A thrilling sci-fi adventure novel.	4.10	2	t
+10	Cookbook	25.99	\N	Recipes from around the world.	4.50	2	t
+11	Jeans	49.99	\N	Classic denim jeans with a slim fit.	4.20	3	t
+12	Jacket	89.99	\N	Water-resistant outdoor jacket.	4.40	3	t
+13	Coffee Maker	79.99	\N	Automatic coffee maker with timer.	4.50	4	t
+14	Vacuum Cleaner	149.99	\N	High-suction vacuum cleaner.	4.30	4	t
+15	Smartwatch	249.99	\N	Fitness tracking smartwatch.	4.20	1	t
+16	Keyboard	59.99	\N	Mechanical keyboard with backlight.	4.60	1	t
 19	Sofa	599.99	\N	Comfortable three-seater sofa.	4.40	4	t
-20	Microwave Oven	99.99	\N	Compact microwave oven.	4.20	4	t
 23	Notebook	2.99	\N	College-ruled spiral notebook.	4.10	2	t
 24	Sneakers	69.99	\N	Comfortable running shoes.	4.30	3	t
-25	Bed Sheets	39.99	\N	100% cotton bed sheet set.	4.50	4	t
 26	Electric Kettle	29.99	\N	Stainless steel electric kettle.	4.40	4	t
-27	Tablet	329.99	\N	10-inch tablet with high-resolution display.	4.60	1	t
 28	Wireless Earbuds	149.99	\N	True wireless earbuds with charging case.	4.50	1	t
-29	Biography Book	18.99	\N	Inspiring biography of a historical figure.	4.20	2	t
 30	Skirt	39.99	\N	Casual summer skirt.	4.10	3	t
 31	Desk Lamp	24.99	\N	LED desk lamp with adjustable brightness.	4.30	4	t
 32	Backpack	59.99	\N	Durable backpack with multiple compartments.	4.50	3	t
-1	Smartphone	699.99		Latest model smartphone with advanced features.	4.50	1	f
-2	Laptop	1299.99		High-performance laptop suitable for gaming and work.	4.70	1	f
-3	Novel Book	19.99		An intriguing novel by a famous author.	4.20	2	f
-4	T-Shirt	9.99		Comfortable cotton t-shirt in various sizes.	4.00	3	f
-5	Blender	49.99		Powerful blender perfect for smoothies.	4.30	4	f
-6	Headphones	199.99	\N	Noise-cancelling over-ear headphones.	4.60	1	f
-7	E-reader	129.99	\N	Lightweight e-reader with adjustable backlight.	4.50	1	f
-8	Wireless Mouse	29.99	\N	Ergonomic wireless mouse with USB receiver.	4.30	1	f
-9	Science Fiction Book	15.99	\N	A thrilling sci-fi adventure novel.	4.10	2	f
-10	Cookbook	25.99	\N	Recipes from around the world.	4.50	2	f
-11	Jeans	49.99	\N	Classic denim jeans with a slim fit.	4.20	3	f
-12	Jacket	89.99	\N	Water-resistant outdoor jacket.	4.40	3	f
-13	Coffee Maker	79.99	\N	Automatic coffee maker with timer.	4.50	4	f
-14	Vacuum Cleaner	149.99	\N	High-suction vacuum cleaner.	4.30	4	f
-15	Smartwatch	249.99	\N	Fitness tracking smartwatch.	4.20	1	f
-16	Keyboard	59.99	\N	Mechanical keyboard with backlight.	4.60	1	f
 17	Fantasy Book	22.99	\N	An epic fantasy tale.	4.70	2	f
 18	Dress	79.99	\N	Elegant evening dress.	4.50	3	f
 21	Gaming Console	399.99	\N	Latest generation gaming console.	4.80	1	f
 22	Camera	499.99	\N	Digital SLR camera with lens.	4.70	1	f
+20	Microwave Oven	99.99	\N	Compact microwave oven.	4.20	4	f
+25	Bed Sheets	39.99	\N	100% cotton bed sheet set.	4.50	4	f
+27	Tablet	329.99	\N	10-inch tablet with high-resolution display.	4.60	1	f
+29	Biography Book	18.99	\N	Inspiring biography of a historical figure.	4.20	2	f
 \.
 
 
