@@ -2,6 +2,7 @@ package STP_KURS.GraphQL.Entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -20,8 +21,10 @@ public class User {
     private String password;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @ToString.Exclude
     private Cart cart;
 
     @OneToMany(mappedBy = "author")
+    @ToString.Exclude
     private List<Review> reviews;
 }

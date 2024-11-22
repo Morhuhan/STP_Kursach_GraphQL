@@ -24,10 +24,11 @@ public class Product {
     private Boolean inStock;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @ToString.Exclude  // Exclude reviews to prevent recursion
     private List<Review> reviews;
 
     @ManyToOne
-    @ToString.Exclude
+    @ToString.Exclude  // Already excluded, but ensure it's there
     @JoinColumn(name = "category_id")
     private Category category;
 }

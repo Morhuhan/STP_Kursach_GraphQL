@@ -35,18 +35,9 @@ const GET_PAGINATED_PRODUCTS = gql`
 `;
 
 const ADD_TO_CART = gql`
-  mutation AddToCart($productId: ID!, $quantity: Int!) {
-    addToCart(productId: $productId, quantity: $quantity) {
-      id
-      items {
-        id
-        quantity
-        product {
-          id
-          name
-          price
-        }
-      }
+mutation AddToCart($productId: ID!, $quantity: Int!) {
+  addToCart(productId: $productId, quantity: $quantity) {
+    id
     }
   }
 `;
