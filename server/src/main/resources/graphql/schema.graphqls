@@ -49,6 +49,7 @@ type ProductPage {
 }
 
 type Query {
+
     products(
         searchTerm: String,
         minPrice: Float,

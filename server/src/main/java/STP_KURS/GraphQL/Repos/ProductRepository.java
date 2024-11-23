@@ -12,4 +12,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 
     @Query("SELECT p FROM Product p LEFT JOIN FETCH p.reviews r LEFT JOIN FETCH r.author WHERE p.id = :id")
     Optional<Product> findByIdWithReviewsAndAuthor(@Param("id") Long id);
+
+    Optional<Product> findByName(String name);
 }
