@@ -3,7 +3,7 @@ package STP_KURS.GraphQL.Servecies;
 import STP_KURS.GraphQL.Entities.Product;
 import STP_KURS.GraphQL.Entities.ProductPage;
 import STP_KURS.GraphQL.Repos.ProductRepository;
-import STP_KURS.GraphQL.Security.SubscriptionResolver;
+import STP_KURS.GraphQL.Controllers.SubscriptionResolver;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

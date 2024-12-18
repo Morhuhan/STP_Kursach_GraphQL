@@ -1,4 +1,4 @@
-package STP_KURS.GraphQL.Security;
+package STP_KURS.GraphQL.Controllers;
 
 import STP_KURS.GraphQL.Entities.Product;
 import STP_KURS.GraphQL.Repos.ProductRepository;
